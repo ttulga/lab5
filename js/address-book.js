@@ -14,6 +14,12 @@
 
     returns undefined (array is sorted in place)
 */
+$(function(){
+    render(Employees.entries);
+
+    $('.sort')
+});
+
 function sortObjArray(objArray, propName) {
     if (!objArray.sort)
         throw new Error('The objArray parameter does not seem to be an array (no sort method)');
@@ -33,4 +39,26 @@ function sortObjArray(objArray, propName) {
             return 1;
     });
 } //sortObjArray()
+
+function render(entries) {
+    var $template = $('.template');
+    var $container = $('.address-book')
+    var $instance;
+
+    $container.empty();
+
+    $.each(entries, function(){
+        $instance = $template.clone();
+        $instance.find('.first').html(this.first);
+        $instance.find('.last').html(this.last);
+        $instance.find('.dept').html(this.dept);
+        $instance.find('.title').html(this.title);
+        $instance.find('.pic').attr({
+            src: this.pic,
+            alt: 'picture of' + this.first + ' ' + this.last
+        });
+        $instance.removeClass('template');
+        $container.append($instance);
+    });
+}
 
