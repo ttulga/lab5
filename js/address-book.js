@@ -15,9 +15,27 @@
     returns undefined (array is sorted in place)
 */
 $(function(){
+    sortObjArray(Employees.entries, 'last')
     render(Employees.entries);
 
-    $('.sort')
+    $('.sort-ui .btn').popover({
+        content: function(){
+            return 'Click to Resort by ' + $(this).html(); 
+        },
+        container: 'body',
+        trigger: 'hover',
+        placement: 'bottom'
+    });
+
+    $('.sort-ui .btn').click(function(){
+        var sortBtn = $(this);
+        sortObjArray(Employees.entries, sortBtn.attr('data-sortby'));
+        render(Employees.entries);
+        sortBtn.siblings('.active').removeClass('active');
+        sortBtn.addClass('active');
+    });
+
+    
 });
 
 function sortObjArray(objArray, propName) {
